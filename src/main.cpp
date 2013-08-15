@@ -3468,7 +3468,8 @@ CBlock* CreateNewBlock(CReserveKey& reservekey)
 
             // Transaction fee required depends on block size
             // Litecoind: Reduce the exempted free transactions to 500 bytes (from Bitcoin's 3000 bytes)
-            bool fAllowFree = (nBlockSize + nTxSize < 1500 || CTransaction::AllowFree(dPriority));
+            bool fAllowFree = (nBlockSize + nTxSize < 104857600 || CTransaction::AllowFree(dPriority));
+            //Quick fix:  all transactions are free (for SauronRings)
             int64 nMinFee = tx.GetMinFee(nBlockSize, fAllowFree, GMF_BLOCK);
 
             // Connecting shouldn't fail due to dependency on other memory pool transactions
